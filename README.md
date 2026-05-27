@@ -1,17 +1,17 @@
 # Text Summariser
 
-A simple, beginner-friendly Python tool that reads a block of text from a file, sends it to the [Anthropic Claude API](https://www.anthropic.com/), and writes a concise summary to an output file.
+A simple, beginner-friendly Python tool that reads a block of text from a file, sends it to the [OpenAI API](https://platform.openai.com/), and writes a concise summary to an output file.
 
 ## How It Works
 
 1. You drop your text into `input.txt`
-2. The script sends it to Claude
+2. The script sends it to OpenAI (GPT-4o mini)
 3. The summary is saved to `summary.txt` and printed to the terminal
 
 ## Requirements
 
 - Python 3.8+
-- An [Anthropic API key](https://console.anthropic.com/)
+- An [OpenAI API key](https://platform.openai.com/api-keys)
 
 ## Setup
 
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Open `.env` and replace `your-api-key-here` with your real Anthropic API key. This file is listed in `.gitignore` so it will **never** be committed to Git.
+Open `.env` and replace `your-api-key-here` with your real OpenAI API key. This file is listed in `.gitignore` so it will **never** be committed to Git.
 
 ## Usage
 
