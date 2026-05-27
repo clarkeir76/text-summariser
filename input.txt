@@ -1,0 +1,5 @@
+Replace this text with whatever you want to summarise.
+
+You can paste in an article, a document, meeting notes, or any other
+long-form text. The summariser will send it to Claude and write a
+concise summary to summary.txt.
