@@ -1,18 +1,17 @@
 """
 Text Summariser
 ===============
-Reads text from input.txt, sends it to the Anthropic Claude API,
+Reads text from input.txt, sends it to the OpenAI API,
 and writes a concise summary to summary.txt.
 
 Usage:
-  1. Copy .env.example to .env and add your API key
+  1. Copy .env.example to .env and add your OpenAI API key
   2. Add the text you want to summarise to input.txt
   3. Run:  python summarise.py
   4. Find your summary in summary.txt
 """
 
-import os
-import anthropic
+from openai import OpenAI
 from dotenv import load_dotenv
 
 # Load environment variables from .env (keeps your API key out of the code)
@@ -38,13 +37,13 @@ def write_output(file_path: str, content: str) -> None:
 
 
 def summarise(text: str) -> str:
-    """Send text to Claude and return a concise summary."""
+    """Send text to OpenAI and return a concise summary."""
 
-    # The Anthropic client automatically reads ANTHROPIC_API_KEY from the environment
-    client = anthropic.Anthropic()
+    # The OpenAI client automatically reads OPENAI_API_KEY from the environment
+    client = OpenAI()
 
-    message = client.messages.create(
-        model="claude-opus-4-7",
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
         max_tokens=1024,
         messages=[
             {
@@ -58,12 +57,7 @@ def summarise(text: str) -> str:
         ],
     )
 
-    # The response contains a list of content blocks — find the text block
-    for block in message.content:
-        if block.type == "text":
-            return block.text
-
-    return ""  # Return empty string if no text block found
+    return response.choices[0].message.content or ""
 
 
 def main() -> None:
@@ -80,7 +74,7 @@ def main() -> None:
     word_count = len(text.split())
     print(f"✅  Read {word_count} words.")
 
-    print("🤖  Sending to Claude for summarisation...")
+    print("🤖  Sending to OpenAI for summarisation...")
     summary = summarise(text)
 
     print(f"💾  Writing summary to '{output_file}'...")
