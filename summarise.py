@@ -32,8 +32,18 @@ def read_input(file_path: str) -> str:
 
 def write_output(file_path: str, content: str) -> None:
     """Write content to a file."""
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(content)
+    try:
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(content)
+    except PermissionError:
+        raise PermissionError(
+            f"Could not write to '{file_path}'.\n"
+            "Please check that you have write permission in this directory."
+        )
+    except OSError as e:
+        raise OSError(
+            f"Could not write to '{file_path}': {e}"
+        )
 
 
 def summarise(text: str) -> str:
