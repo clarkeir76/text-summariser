@@ -28,6 +28,21 @@ def read_input(file_path: str) -> str:
             f"Could not find '{file_path}'.\n"
             "Please create the file and add the text you want to summarise."
         )
+    except PermissionError:
+        raise PermissionError(
+            f"Could not read '{file_path}'.\n"
+            "Please check that you have read permission for this file."
+        )
+    except UnicodeDecodeError:
+        raise UnicodeDecodeError(
+            "utf-8", b"", 0, 1,
+            f"Could not read '{file_path}' as UTF-8 text.\n"
+            "Please ensure the file is saved as UTF-8 and does not contain binary data."
+        )
+    except OSError as e:
+        raise OSError(
+            f"Could not read '{file_path}': {e}"
+        )
 
 
 def write_output(file_path: str, content: str) -> None:
